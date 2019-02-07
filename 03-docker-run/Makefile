@@ -2,7 +2,7 @@ build:
 	docker build -t workshop/docker-run .
 
 run:
-	# docker | run | arguements | image                | cmd
+	# docker | run | arguments | image                | cmd
 	docker     run     --rm        workshop/docker-run   ls -la
 
 run-mount:
