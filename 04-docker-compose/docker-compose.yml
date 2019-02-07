@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+
+  site:
+    image: wordpress:latest
+    depends_on:
+      - database
+    ports:
+      - "8080:80"
+
+  database:
+    image: mariadb:latest
+    environment:
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+    command:
+      - "--character-set-server=utf8"
+      - "--collation-server=utf8_unicode_ci"
+    volumes:
+      - database:/var/lib/mysql
+
+volumes:
+  database:
+    driver: local
