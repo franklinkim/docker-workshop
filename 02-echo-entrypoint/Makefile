@@ -1,5 +1,5 @@
 build:
-	docker build -t workshop/echo .
+	docker build -t workshop/entrypoint .
 
 run:
-	docker run --rm workshop/echo "hello world"
+	docker run --rm workshop/entrypoint "hello world"
