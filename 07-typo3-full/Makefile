@@ -1,12 +1,24 @@
+# Install deps
 install:
 	docker run --rm -it -v $(PWD):/app composer install
 
+# Change file permissions
+chown:
+	chown -R www-data:wwww-data
+
+# Create docker network
+network:
+	docker network create public
+
+# Build container
 build:
 	docker-compose build
 
+# Start up
 up:
 	docker-compose up -d
 
+# Export dump
 export:
 	rm -f var/archive.tar.gz
 	mkdir -p var/archive
@@ -16,6 +28,7 @@ export:
 	cd var/ && tar -czvf archive.tar.gz archive
 	rm -rf var/archive
 
+# Import dump
 import:
 	rm -rf var/archive
 	cd var/ && tar -xzvf archive.tar.gz
