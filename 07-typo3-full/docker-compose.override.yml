@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  traefik:
+    image: traefik:1.6
+    restart: unless-stopped
+    networks:
+      - public
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config/traefik:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - traefik.enable=false
+
+  database:
+    ports:
+      - "3306:3306"

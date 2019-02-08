@@ -4,13 +4,26 @@ services:
 
   site:
     build: ./docker/site
+    restart: unless-stopped
+    networks:
+      - default
+      - public
     volumes:
       - .:/var/www/html
-    ports:
-      - "8080:80"
+    labels:
+      - traefik.port=80
+      - traefik.enable=true
+      - traefik.backend=frontend
+      - traefik.frontend.rule=Host:mysite.test
+      - traefik.frontend.passHostHeader=true
+      - traefik.docker.network=public
 
   database:
     image: mariadb:latest
+    restart: unless-stopped
+    # env_file: .env
+    networks:
+      - default
     environment:
       MYSQL_USER: typo3
       MYSQL_PASSWORD: typo3
@@ -21,11 +34,14 @@ services:
       - "--collation-server=utf8_unicode_ci"
     volumes:
       - database:/var/lib/mysql
+    labels:
+      - traefik.enable=false
 
 volumes:
-  uploads:
-    driver: local
-  fileadmin:
-    driver: local
   database:
     driver: local
+
+networks:
+  public:
+    external:
+      name: public

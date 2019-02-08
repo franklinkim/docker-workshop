@@ -1,0 +1,78 @@
+################################################################
+# Global configuration
+################################################################
+
+# Log level
+#
+# Optional
+# Default: "ERROR"
+#
+logLevel = "WARN"
+
+# Entrypoints to be used by frontends that do not specify any entrypoint.
+# Each frontend can specify its own entrypoints.
+#
+# Optional
+# Default: ["http"]
+#
+defaultEntryPoints = ["http", "https"]
+
+
+################################################################
+# Entrypoints configuration
+################################################################
+
+# Entrypoints definition
+#
+# Optional
+# Default:
+# [entryPoints]
+#     [entryPoints.http]
+#     address = ":80"
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/etc/traefik/tls/server.crt"
+      KeyFile = "/etc/traefik/tls/server.key"
+
+
+################################################################
+# Docker configuration backend
+################################################################
+
+# Enable Docker configuration backend
+[docker]
+
+# Enable watch docker changes
+#
+# Optional
+#
+watch = true
+
+# Docker server endpoint. Can be a tcp or a unix socket endpoint.
+#
+# Required
+# Default: "unix:///var/run/docker.sock"
+#
+endpoint = "unix:///var/run/docker.sock"
+
+# Default domain used.
+# Can be overridden by setting the "traefik.domain" label on a container.
+#
+# Optional
+# Default: ""
+#
+domain = "localhost"
+
+# Expose containers by default in traefik
+#
+# Optional
+# Default: true
+#
+# exposedByDefault = true
