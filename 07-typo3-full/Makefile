@@ -1,10 +1,11 @@
 # Install deps
+# NOTE Win: $(PWD) = C:\\path\to\07-typo3-full
 install:
 	docker run --rm -it -v $(PWD):/app composer install
 
-# Change file permissions
+# Change file permissions (server only)
 chown:
-	chown -R www-data:wwww-data
+	chown -R www-data:www-data .
 
 # Create docker network
 network:
@@ -37,3 +38,4 @@ import:
 	rm -rf public/fileadmin
 	mv var/archive/fileadmin public/fileadmin 
 	rm -rf var/archive
+	# TODO: clear typo3 cache
