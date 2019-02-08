@@ -1,5 +1,7 @@
 FROM php:7.2-apache-stretch
 
+# TODO: check apache pagespeed
+
 # Install TYPO3
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
